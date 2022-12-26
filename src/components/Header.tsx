@@ -56,7 +56,10 @@ const Header = () => {
         <Link title="Hotels" />
         <Link title="Flights" />
         <Link title="Bookings" />
-        <button className="h-[40px] font-sans text-[17px] font-medium leading-[21.62px]">
+        <button
+          onClick={() => setOpenLogin(!openLogin)}
+          className="h-[40px] font-sans text-[17px] font-medium leading-[21.62px]"
+        >
           Login
         </button>
         <button
@@ -72,6 +75,9 @@ const Header = () => {
       <MobileNav />
       <Modal isOpen={openSignUp} onCloseHandler={() => setOpenSignUp(false)}>
         <AuthForm />
+      </Modal>
+      <Modal isOpen={openLogin} onCloseHandler={() => setOpenLogin(false)}>
+        <AuthForm type="Login" />
       </Modal>
     </div>
   );
