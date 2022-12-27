@@ -3,11 +3,18 @@ import Link from "./Link";
 import Modal from "./Modal";
 import AuthForm from "./AuthForm";
 
+import { useAppSelector, useAppDispatch } from "../hooks/useTypedSelector";
+
+import { logout } from "../slices/user";
+
 import Logo from "../images/Logo.png";
 import ArrowDown from "../images/arrowdown.png";
 
 const MobileNav = () => {
   const [showNav, setShowNav] = React.useState(false);
+  const email = useAppSelector((state) => state.user.email);
+
+  console.log(email);
 
   return (
     <>
@@ -29,12 +36,20 @@ const MobileNav = () => {
           <Link title="Hotels" />
           <Link title="Flights" />
           <Link title="Bookings" />
-          <button className="text-left font-sans text-[17px] font-medium leading-[21.62px]">
-            Login
-          </button>
-          <button className="w-[102px] h-[40px] font-sans text-[17px] font-medium leading-[21.62px] border-2 border-[#212832] rounded-[10px]">
-            Sign up
-          </button>
+          {email ? (
+            <span>Welcome {email}</span>
+          ) : (
+            <>
+              <button className="text-left font-sans text-[17px] font-medium leading-[21.62px]">
+                Login
+              </button>
+              <button className="w-[102px] h-[40px] font-sans text-[17px] font-medium leading-[21.62px] border-2 border-[#212832] rounded-[10px]">
+                Sign up
+              </button>
+              ?
+            </>
+          )}
+
           <span className="flex items-center font-sans text-[17px] gap-x-2 font-medium leading-[21.62px]">
             EN <img className="" src={ArrowDown} alt="arrowdown" />
           </span>
@@ -47,6 +62,8 @@ const MobileNav = () => {
 const Header = () => {
   const [openSignUp, setOpenSignUp] = React.useState(false);
   const [openLogin, setOpenLogin] = React.useState(false);
+  const email = useAppSelector((state) => state.user.email);
+  const dispatch = useAppDispatch();
 
   return (
     <div className="flex justify-between items-center max-w-[1160px] h-[40px] mx-auto">
@@ -56,18 +73,32 @@ const Header = () => {
         <Link title="Hotels" />
         <Link title="Flights" />
         <Link title="Bookings" />
-        <button
-          onClick={() => setOpenLogin(!openLogin)}
-          className="h-[40px] font-sans text-[17px] font-medium leading-[21.62px]"
-        >
-          Login
-        </button>
-        <button
-          onClick={() => setOpenSignUp(!openSignUp)}
-          className="w-[102px] h-[40px] font-sans text-[17px] font-medium leading-[21.62px] border-2 border-[#212832] rounded-[10px]"
-        >
-          Sign up
-        </button>
+        {email ? (
+          <>
+            <span>Welcome {email}</span>{" "}
+            <button
+              onClick={() => dispatch(logout())}
+              className="w-[102px] h-[40px] font-sans text-[17px] font-medium leading-[21.62px] border-2 border-[#212832] rounded-[10px]"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => setOpenLogin(!openLogin)}
+              className="h-[40px] font-sans text-[17px] font-medium leading-[21.62px]"
+            >
+              Login
+            </button>
+            <button
+              onClick={() => setOpenSignUp(!openSignUp)}
+              className="w-[102px] h-[40px] font-sans text-[17px] font-medium leading-[21.62px] border-2 border-[#212832] rounded-[10px]"
+            >
+              Sign up
+            </button>
+          </>
+        )}
         <span className="flex items-center font-sans text-[17px] gap-x-2 font-medium leading-[21.62px]">
           EN <img className="" src={ArrowDown} alt="arrowdown" />
         </span>

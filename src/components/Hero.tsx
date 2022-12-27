@@ -18,7 +18,7 @@ const Hero = () => {
         <img className="w-full h-full" src={Traveller} alt="Traveller" />
       </div>
       <img
-        className="hidden lg:block absolute top-[255px] left-[323px]"
+        className="hidden lg:block absolute top-[320px] left-[323px]"
         src={Tides}
         alt="tides"
       />
